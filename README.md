@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Asset_Tracker
 Asset tracker learning project
 =======
@@ -66,4 +65,3 @@ REST is easy peasy with this Hello World RESTEasy resource.
 This example demonstrate RESTEasy JSON serialisation by letting you list, add and remove quark types from a list. Quarked!
 
 [Related guide section...](https://quarkus.io/guides/rest-json#creating-your-first-json-rest-service)
->>>>>>> c88f29d (Initial Commit)
