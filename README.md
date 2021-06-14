@@ -1,6 +1,6 @@
 # Asset_Tracker
 Asset tracker learning project
-=======
+
 # rest-json-quickstart project
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
