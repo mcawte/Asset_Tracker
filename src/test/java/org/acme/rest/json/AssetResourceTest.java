@@ -17,6 +17,7 @@ public class AssetResourceTest {
              .statusCode(200)
              .body("size()",is(2))
              .body("[0].timestamp_utc",is(1492301050))
+             .body("[0].lng",is(151.2099F))
              .body("[1].timestamp_utc",is(1046753105));
     }
 }
