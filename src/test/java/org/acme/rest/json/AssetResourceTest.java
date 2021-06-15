@@ -16,6 +16,7 @@ public class AssetResourceTest {
           .then()
              .statusCode(200)
              .body("size()",is(2))
-             .body("[0].timestamp_utc",is(1492301050));
+             .body("[0].timestamp_utc",is(1492301050))
+             .body("[1].timestamp_utc",is(1046753105));
     }
 }
