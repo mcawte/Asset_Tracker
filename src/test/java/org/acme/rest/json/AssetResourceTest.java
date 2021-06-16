@@ -35,7 +35,8 @@ public class AssetResourceTest {
         System.out.println("Generated UUID = " + generatedUUID);
 
         // Test getById
-        given().when().get("/assets/{id}", generatedUUID.replaceAll("^\"|\"$", ""))
+        given().when()
+        .get("/assets/{id}", generatedUUID.replaceAll("^\"|\"$", "")) // This is gross.
         .then()
         .statusCode(200)
         .body("timestamp_utc", is(1592301050))

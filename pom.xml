@@ -16,7 +16,7 @@
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
     <quarkus.platform.version>1.13.7.Final</quarkus.platform.version>
     <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
-    <coverage.minimum>0.2</coverage.minimum>
+    <coverage.minimum>1.0</coverage.minimum>
     <coverage.exclusions>**/config/*</coverage.exclusions>
   </properties>
   <dependencyManagement>
