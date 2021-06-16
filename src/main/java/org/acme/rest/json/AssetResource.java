@@ -1,43 +1,70 @@
 package org.acme.rest.json;
 
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.Set;
+import java.util.Map;
+import java.util.UUID;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 @Path("/assets")
 public class AssetResource {
 
-    private Set<Asset> assets = Collections.newSetFromMap(Collections.synchronizedMap(new LinkedHashMap<>()));
+    private Map<UUID,Asset> assets = Collections.synchronizedMap(new LinkedHashMap<>());
 
     public AssetResource() {
-        assets.add(new Asset(1492301050, 151.2099, 33.865143));
-        assets.add(new Asset(1046753105, 29.733333, -70.083333));
-
+        Asset asset;
+        asset = new Asset(1492301050, 151.2099, 33.865143);
+        assets.put(asset.id, asset);
+        asset = new Asset(1046753105, 29.733333, -70.083333);
+        assets.put(asset.id, asset);
     }
 
     @GET
     public Response list() {
     //public Set<Asset> list() {
         //return assets;
-        return Response.ok(assets).build();
+        System.out.println("The assets are = " + assets);
+        return Response.ok(assets.values()).build();
     }
 
+    @GET
+    @Path("/{id}")
+    //@Consumes(MediaType.APPLICATION_JSON)
+    //public Set<Asset> delete(Asset asset) {
+    public Response getById(@PathParam(value="id") String id) {
+        UUID assetUUID = UUID.fromString(id);
+        Asset asset = assets.get(assetUUID);
+        return Response.ok(asset).build();
+    }
+    
+
     @POST
-    public Set<Asset> add(Asset asset) {
-        assets.add(asset);
-        return assets;
+    @Consumes(MediaType.APPLICATION_JSON)
+    // public Set<Asset> add(Asset asset) {
+    public Response add(Asset asset) {
+        assets.put(asset.id, asset);
+        System.out.println("The assets are = " + assets);
+        return Response.ok(asset.id).build(); // assets;
     }
 
     @DELETE
-    public Set<Asset> delete(Asset asset) {
-        assets.removeIf(existingAsset -> existingAsset.id.equals(asset.id));
-        return assets;
+    @Path("/{id}")
+    //@Consumes(MediaType.APPLICATION_JSON)
+    //public Set<Asset> delete(Asset asset) {
+    public Response delete(@PathParam(value="id") UUID id) {
+        assets.remove(id);
+        return Response.ok().build(); 
     }
+
+
 
 }
