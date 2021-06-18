@@ -34,20 +34,18 @@ public class AssetController {
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response addAsset(int timestamp_utc, double lng, double lat) {
-        UUID newId = this.service.addAsset(timestamp_utc, lng, lat);
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response addAsset(AssetModel asset) {
+        AssetModel newAsset = this.service.addAsset(asset);
         System.out.println("The assets are = " + this.service.getAssets());
-        return Response.ok(newId).build(); // assets;
+        return Response.ok(newAsset).build(); // assets;
     }
 
     @DELETE
     @Path("/{id}")
     public Response deleteAssetById(@PathParam(value = "id") UUID id) {
         boolean success = this.service.deleteAssetById(id);
-        if (success) {
-            return Response.ok().build();
-        } else {
-            return Response.serverError().build();
-        }
+        int resCode = success ? 200 : 500;
+        return Response.status(resCode).build();
     }
 }

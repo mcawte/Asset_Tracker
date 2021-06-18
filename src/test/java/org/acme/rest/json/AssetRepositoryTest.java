@@ -1,41 +1,58 @@
 package org.acme.rest.json;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.util.UUID;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.internal.matchers.InstanceOf;
 import org.mockito.junit.jupiter.MockitoExtension;
-
-import static org.mockito.BDDMockito.given;
-
-import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
 public class AssetRepositoryTest {
-    @Mock
-    private AssetModel assetModel;
+    // @Mock
+    // private AssetModel assetModel;
     @InjectMocks
     private AssetRepository repository;
 
     @Test
-    public void testGetAsset() {
+    public void testGetAssetById() {
         // Given
-        AssetModel asset = new AssetModel(70, 80, 90);
-
-        //given(assetModel.id).willReturn(asset.id);
-        // given(assetModel.timestamp_utc).willReturn(70);
-        // given(assetModel.lng).willReturn((Double) 80.0);
-        // given(assetModel.lat).willReturn((Double) 90.0);
+        AssetModel asset = new AssetModel(70, 80.0, 90.0);
+        
+        
 
         // When
 
         AssetModel returnedAsset = repository.getAssetById(asset.id);
 
-        // Then 
+        // Then
+        assertEquals(returnedAsset.id, asset.id);
+        assertEquals(returnedAsset.timestamp_utc, asset.timestamp_utc);
+        assertEquals(returnedAsset.lng, asset.lng);
+        assertEquals(returnedAsset.lat, asset.lat);
 
-        assertEquals(returnedAsset,asset);
+    }
+
+    @Test
+    public void testAddAsset() {
+        // Given
+        AssetModel asset = new AssetModel(70, 80.0, 90.0);
+
+        // When
+
+        AssetModel returnedAsset = repository.addAsset(asset);
+
+        // Then
+        assertTrue(returnedAsset.id instanceof UUID);
+        assertEquals(returnedAsset.timestamp_utc, asset.timestamp_utc);
+        assertEquals(returnedAsset.lng, asset.lng);
+        assertEquals(returnedAsset.lat, asset.lat);
 
     }
 }

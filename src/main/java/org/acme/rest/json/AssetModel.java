@@ -2,10 +2,13 @@ package org.acme.rest.json;
 
 import java.util.UUID;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 // Data class that gets stored in the DB via the ORM (JRA) and also 
 // converted to json
 public class AssetModel {
 
+    @JsonIgnore
     public UUID id;
     public int timestamp_utc;
     public double lng;

@@ -25,8 +25,8 @@ public class AssetService {
         return this.repository.getAssetById(id);
     }
 
-    public UUID addAsset(int timestamp_utc, double lng, double lat) {
-        return this.repository.addAsset(timestamp_utc, lng, lat);
+    public AssetModel addAsset(AssetModel asset) {
+        return this.repository.addAsset(asset);
     }
 
     public boolean deleteAssetById(UUID id) {

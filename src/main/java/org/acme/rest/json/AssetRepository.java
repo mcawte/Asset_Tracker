@@ -32,10 +32,10 @@ public class AssetRepository {
         return this.assets.get(id);
     }
 
-    public UUID addAsset(int timestamp_utc, double lng, double lat) {
-        AssetModel newAsset = new AssetModel(timestamp_utc, lng, lat);
+    public AssetModel addAsset(AssetModel asset) {
+        AssetModel newAsset = new AssetModel(asset.timestamp_utc,asset.lng,asset.lat);
         this.assets.put(newAsset.id, newAsset);
-        return newAsset.id;
+        return newAsset;
     }
 
     public boolean deleteAssetById(UUID id) {

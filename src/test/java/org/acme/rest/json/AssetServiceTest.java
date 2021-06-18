@@ -1,6 +1,5 @@
 package org.acme.rest.json;
 
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -11,6 +10,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.BDDMockito.given;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
@@ -21,7 +22,7 @@ public class AssetServiceTest {
     private AssetService service;
 
     @Test
-    public void testGetAssetService() {
+    public void testGetAssetByIdService() {
         // Given
         AssetModel asset = new AssetModel(40, 50, 60);
 
@@ -37,24 +38,59 @@ public class AssetServiceTest {
     }
 
     @Test
+    public void testGetAssetsService() {
+        // Given
+        List<AssetModel> assets = new ArrayList<>();
+        AssetModel asset;
+        asset = new AssetModel(500, 600.0, 700.0);
+        assets.add(asset);
+        asset = new AssetModel(800, 900.0, 1000.0);
+        assets.add(asset);
+
+        given(repository.getAssets()).willReturn(assets);
+
+        // When
+
+        List<AssetModel> returnedAssets = service.getAssets();
+
+        // Then
+
+        assertEquals(returnedAssets, assets);
+    }
+
+    @Test
     public void testAddAssetService() {
         // Given
         AssetModel asset = new AssetModel(40, 50, 60);
 
-        UUID uuid = UUID.randomUUID();
-
-        given(repository.addAsset(40, 50.0, 60.0)).willReturn(uuid);
+        given(repository.addAsset(asset)).willReturn(asset);
 
         // When
 
-        service.addAsset(40, 50.0, 60.0);
-
-        AssetModel returnedAsset = service.getAssetById(uuid);
+        AssetModel returnedAsset = service.addAsset(asset);
 
         // Then
 
-        assertEquals(returnedAsset.timestamp_utc, asset.timestamp_utc);
-        assertEquals(returnedAsset.lng, asset.lng);
-        assertEquals(returnedAsset.lat, asset.lat);
+        assertEquals(returnedAsset, asset);
+
+    }
+
+    @Test
+    public void deleteAssetById() {
+        // Given
+
+        UUID uuid = UUID.randomUUID();
+
+        given(repository.deleteAssetById(uuid)).willReturn(true);
+
+        // When
+
+        Boolean bool = service.deleteAssetById(uuid);
+
+        // Then
+
+        assertEquals(bool, true);
+        
+
     }
 }
