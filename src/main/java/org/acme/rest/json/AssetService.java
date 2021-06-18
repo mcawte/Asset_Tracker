@@ -29,7 +29,7 @@ public class AssetService {
         return this.repository.addAsset(timestamp_utc, lng, lat);
     }
 
-    public boolean removeAssetById(UUID id) {
-        return this.repository.removeAssetById(id);
+    public boolean deleteAssetById(UUID id) {
+        return this.repository.deleteAssetById(id);
     }
 }

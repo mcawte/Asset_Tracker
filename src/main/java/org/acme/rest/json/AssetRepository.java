@@ -38,7 +38,7 @@ public class AssetRepository {
         return newAsset.id;
     }
 
-    public boolean removeAssetById(UUID id) {
+    public boolean deleteAssetById(UUID id) {
         this.assets.remove(id);
         return true; // A method to determine success could be added here later
     }
