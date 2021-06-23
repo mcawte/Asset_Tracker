@@ -5,9 +5,10 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ new_structure ]
+    branches: [ '*' ]
   pull_request:
-    branches: [ $default-branch ]
+    branches: [ '*' ]
+    
 
 jobs:
   verify:
