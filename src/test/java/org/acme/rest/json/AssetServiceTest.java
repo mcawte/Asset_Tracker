@@ -1,6 +1,8 @@
 package org.acme.rest.json;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
@@ -9,9 +11,14 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.times;
+import static org.mockito.Mockito.never;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
@@ -26,15 +33,16 @@ public class AssetServiceTest {
         // Given
         AssetModel asset = new AssetModel(40, 50, 60);
 
-        given(repository.getAssetById(asset.id)).willReturn(asset);
+        given(repository.getAssetById(asset.getId())).willReturn(Optional.of(asset));
 
         // When
 
-        AssetModel returnedAsset = service.getAssetById(asset.id);
+        AssetModel returnedAsset = service.getAssetById(asset.getId());
 
         // Then
 
         assertEquals(returnedAsset, asset);
+        assertThrows(NoSuchElementException.class, () -> service.getAssetById(UUID.randomUUID()));
     }
 
     @Test
@@ -76,21 +84,39 @@ public class AssetServiceTest {
     }
 
     @Test
-    public void deleteAssetById() {
+    public void testDeleteAssetService() {
         // Given
-
-        UUID uuid = UUID.randomUUID();
-
-        given(repository.deleteAssetById(uuid)).willReturn(true);
-
+        AssetModel asset = new AssetModel(40, 50, 60);
+        given(repository.getAssetById(asset.getId())).willReturn(Optional.of(asset));
+        
         // When
-
-        Boolean bool = service.deleteAssetById(uuid);
+        //service.addAsset(asset);
+        service.deleteAssetById(asset.getId());
 
         // Then
+        then(this.repository).should(times(1)).deleteAssetById(asset.getId());
 
-        assertEquals(bool, true);
+       // assertThrows(NotFoundException.class, () -> service.deleteAssetById(UUID.randomUUID()));
+        //assertThrows(NoSuchElementException.class, () -> service.getAssetById(asset.getId()));
+        
+    }
+
+    @Test
+    public void testDeleteAssetServiceAltPath() {
+        // Given
+        AssetModel asset = new AssetModel(40, 50, 60);
+        given(repository.getAssetById(asset.getId())).willReturn(Optional.empty());
+        
+        // When
+        //service.addAsset(asset);
+        
+        assertThrows(NotFoundException.class, () -> service.deleteAssetById(asset.getId()));
+        // Then
+        then(this.repository).should(never()).deleteAssetById(asset.getId());
         
 
+        
+        
     }
+
 }

@@ -1,16 +1,17 @@
 package org.acme.rest.json;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import java.util.UUID;
+
+import java.util.List;
+
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.internal.matchers.InstanceOf;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
@@ -21,38 +22,40 @@ public class AssetRepositoryTest {
     private AssetRepository repository;
 
     @Test
-    public void testGetAssetById() {
+    public void testRepository() {
         // Given
         AssetModel asset = new AssetModel(70, 80.0, 90.0);
-        
-        
-
+        AssetModel asset2 = new AssetModel(120, 130.0, 140.0);
         // When
 
-        AssetModel returnedAsset = repository.getAssetById(asset.id);
+        AssetModel newAsset = repository.addAsset(asset);
+        AssetModel returnedAsset = repository.getAssetById(newAsset.getId()).get();
+        AssetModel secondAsset = repository.addAsset(asset2);
+        List<AssetModel> allAssets = repository.getAssets();
+        
+        // Then
+        assertNotNull(newAsset.getId()); 
+        assertEquals(newAsset.getTimestampUtc(), asset.getTimestampUtc());
+        assertEquals(newAsset.getLng(), asset.getLng());
+        assertEquals(newAsset.getLat(), asset.getLat());
+        
+        assertNotEquals(asset, newAsset);
+        assertEquals(newAsset, returnedAsset);
+        assert(allAssets.contains(returnedAsset));
+        // the real repository class auto-generates 2 to start with.
+        assertEquals(allAssets.size(),4); 
+
+        // Then later when
+
+        repository.deleteAssetById(newAsset.getId());
+        allAssets = repository.getAssets();
 
         // Then
-        assertEquals(returnedAsset.id, asset.id);
-        assertEquals(returnedAsset.timestamp_utc, asset.timestamp_utc);
-        assertEquals(returnedAsset.lng, asset.lng);
-        assertEquals(returnedAsset.lat, asset.lat);
-
+        
+        assertEquals(allAssets.size(),3);
+        assert(allAssets.contains(secondAsset));
+        
     }
 
-    @Test
-    public void testAddAsset() {
-        // Given
-        AssetModel asset = new AssetModel(70, 80.0, 90.0);
-
-        // When
-
-        AssetModel returnedAsset = repository.addAsset(asset);
-
-        // Then
-        assertTrue(returnedAsset.id instanceof UUID);
-        assertEquals(returnedAsset.timestamp_utc, asset.timestamp_utc);
-        assertEquals(returnedAsset.lng, asset.lng);
-        assertEquals(returnedAsset.lat, asset.lat);
-
-    }
+    
 }

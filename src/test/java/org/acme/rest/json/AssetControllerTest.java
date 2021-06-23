@@ -1,6 +1,7 @@
 package org.acme.rest.json;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import javax.ws.rs.core.Response;
 
@@ -12,12 +13,16 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.when;
+import static org.mockito.BDDMockito.then;
+import static org.mockito.BDDMockito.times;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,11 +37,11 @@ public class AssetControllerTest {
         // Given
         AssetModel asset = new AssetModel(10, 20, 30);
 
-        given(service.getAssetById(asset.id)).willReturn(asset);
+        given(service.getAssetById(asset.getId())).willReturn(asset);
 
         // When
 
-        Response res = controller.getAssetById(asset.id.toString());
+        Response res = controller.getAssetById(asset.getId().toString());
 
         // Then
 
@@ -84,23 +89,48 @@ public class AssetControllerTest {
     public void deleteAssetById() {
         // Given
 
-        UUID validUuid = UUID.randomUUID();
-        UUID invalidUuid = UUID.randomUUID();
-
-        given(service.deleteAssetById(validUuid)).willReturn(true);
-        given(service.deleteAssetById(invalidUuid)).willReturn(false);
+        AssetModel asset = new AssetModel(40, 50, 60);
+        //given(service.getAssetById(asset.getId())).willReturn(asset);
 
         // When
-
-        Response validRes = controller.deleteAssetById(validUuid);
-        Response invalidRes = controller.deleteAssetById(invalidUuid);
-
+        controller.deleteAssetById(asset.getId());
 
         // Then
+        then(this.service).should(times(1)).deleteAssetById(asset.getId());
 
-        assertEquals(validRes.getStatus(), 200);
-        assertEquals(invalidRes.getStatus(), 500);
-        
+    }
+
+    @Test
+    public void deleteAssetByWrongId() {
+        // Given
+
+        AssetModel asset = new AssetModel(40, 50, 60);
+        doThrow(NotFoundException.class).when(service).deleteAssetById(asset.getId());
+
+        // When
+        //controller.deleteAssetById(asset.getId());
+       
+        Response response = controller.deleteAssetById(asset.getId());
+        // Then
+        System.out.println("The res is: " + response.getStatus());
+        assertEquals(response.getStatus(), 404);
+
+    }
+
+    @Test
+    public void deleteAssetByIdException() {
+        // Given
+
+        AssetModel asset = new AssetModel(40, 50, 60);
+        doThrow(Exception.class).when(service).deleteAssetById(asset.getId());
+
+        // When
+        //controller.deleteAssetById(asset.getId());
+       
+        Response response = controller.deleteAssetById(asset.getId());
+        // Then
+        System.out.println("The res2 is: " + response.getStatus());
+        assertEquals(response.getStatus(), 500);
 
     }
 }
