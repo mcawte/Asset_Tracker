@@ -1,7 +1,6 @@
 package org.acme.rest.json;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import javax.ws.rs.core.Response;
 
@@ -13,17 +12,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.BDDMockito.given;
-import static org.mockito.BDDMockito.when;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.times;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
-import java.util.UUID;
+
 
 @ExtendWith(MockitoExtension.class)
 public class AssetControllerTest {
@@ -112,7 +107,6 @@ public class AssetControllerTest {
        
         Response response = controller.deleteAssetById(asset.getId());
         // Then
-        System.out.println("The res is: " + response.getStatus());
         assertEquals(response.getStatus(), 404);
 
     }
@@ -129,7 +123,6 @@ public class AssetControllerTest {
        
         Response response = controller.deleteAssetById(asset.getId());
         // Then
-        System.out.println("The res2 is: " + response.getStatus());
         assertEquals(response.getStatus(), 500);
 
     }
