@@ -116,7 +116,7 @@ public class AssetControllerTest {
         // Given
 
         AssetModel asset = new AssetModel(40, 50, 60);
-        doThrow(Exception.class).when(service).deleteAssetById(asset.getId());
+        doThrow(new RuntimeException()).when(service).deleteAssetById(asset.getId());
 
         // When
         //controller.deleteAssetById(asset.getId());
