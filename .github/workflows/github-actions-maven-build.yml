@@ -5,9 +5,8 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ '*' ]
-  pull_request:
-    branches: [ '*' ]
+    tags:
+      - v*.*.* 
     
 
 jobs:
@@ -22,5 +21,8 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Run Maven Tests - Coverage - Style - Unit Tests
-      run: mvn verify
+    - name: Run Maven package
+      run: mvn package
+    - name: Run docker build
+      run: docker build -t asset-tracker:latest .
+
