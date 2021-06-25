@@ -18,6 +18,7 @@
     <surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
     <coverage.minimum>0.4</coverage.minimum>
     <coverage.exclusions>**/config/*</coverage.exclusions>
+    <quarkus.package.type>uber-jar</quarkus.package.type>
   </properties>
   <dependencyManagement>
     <dependencies>
