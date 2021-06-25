@@ -2,7 +2,7 @@
 # This Dockerfile is used in order to build a container that runs the Quarkus application in JVM mode
 #
 FROM registry.access.redhat.com/ubi8/openjdk-11
-
+USER root
 
 WORKDIR /deployments/
 COPY target/*.jar /deployments/application.jar

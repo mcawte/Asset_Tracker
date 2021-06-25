@@ -10,7 +10,7 @@ on:
     
 
 jobs:
-  verify:
+  build:
 
     runs-on: ubuntu-latest
 
