@@ -5,7 +5,7 @@ FROM registry.access.redhat.com/ubi8/openjdk-11
 USER root
 
 WORKDIR /deployments/
-COPY target/*.jar /deployments/application.jar
+COPY Asset_Tracker/target/*.jar /deployments/application.jar
 RUN chmod 775 /deployments /deployments/application.jar \
   && chown -R 1001 /deployments \
   && chmod -R "g+rwX" /deployments \
