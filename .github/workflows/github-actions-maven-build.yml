@@ -23,6 +23,8 @@ jobs:
         distribution: 'adopt'
     - name: Run Maven package
       run: mvn package
+    - name: Copy acceptance jar to github workflows directory
+      run: cp Asset_Tracker-acceptance/target/Asset_Tracker-acceptance*.jar /github/workspace/acceptance.jar
     - name: Run docker build
       run: docker build -t mcawte/asset-tracker:latest .
     - name: Log in to Docker Hub
@@ -45,6 +47,6 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Does console out
-      run: ls -ahl Asset_Tracker-acceptance/target/
+      run: ls -ahl /github/workspace
 
 
