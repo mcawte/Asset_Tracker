@@ -55,5 +55,10 @@ jobs:
         distribution: 'adopt'
     - name: Does console out
       run: ls -ahl /github/workspace
+    - uses: actions/download-artifact@v2
+      with:
+      name: acceptance-artifacts
+    - name: ls files in current directory
+      run: ls -ahl
 
 
