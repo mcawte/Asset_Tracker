@@ -24,7 +24,7 @@ jobs:
     - name: Run Maven package
       run: mvn package
     - name: List file structure
-      run: ls -ahl
+      run: ls -ahl Asset_Tracker-acceptance
     - uses: actions/upload-artifact@v1.0.0
       name: Upload acceptance jar
       with:
