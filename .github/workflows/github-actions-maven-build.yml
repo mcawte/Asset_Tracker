@@ -59,5 +59,11 @@ jobs:
         name: acceptance-artifacts
     - name: ls files in current directory
       run: ls -ahl
+    - name: Run docker image of main project
+      run: docker run -d -name Asset_Tracker --rm mcawte/asset-tracker:latest -p 8080:8080
+    - name: Run acceptance test
+      run: java -jar Asset_Tracker-acceptance-0.0.0.jar
+    - name: Stop docker
+      run: docker stop Asset_Tracker
 
 
