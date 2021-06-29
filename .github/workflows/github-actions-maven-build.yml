@@ -23,12 +23,11 @@ jobs:
         distribution: 'adopt'
     - name: Run Maven package
       run: mvn package
-
     - uses: actions/upload-artifact@v1.0.0
-        with:
-          name: acceptance-artifacts
-          path: */*/Asset_Tracker-acceptance*.jar
-
+    - name: Upload acceptance jar
+      with:
+        name: acceptance-artifacts
+        path: */*/Asset_Tracker-acceptance*.jar
     - name: Run docker build
       run: docker build -t mcawte/asset-tracker:latest .
     - name: Log in to Docker Hub
