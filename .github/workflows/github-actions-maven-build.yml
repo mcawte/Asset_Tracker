@@ -23,8 +23,9 @@ jobs:
         distribution: 'adopt'
     - name: Run Maven package
       run: mvn package
+
     - uses: actions/upload-artifact@v1.0.0
-     name: Upload acceptance jar
+      name: Upload acceptance jar
       with:
         name: acceptance-artifacts
         path: /**/**/Asset_Tracker-acceptance*.jar
