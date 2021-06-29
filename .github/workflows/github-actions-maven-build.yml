@@ -31,7 +31,7 @@ jobs:
       name: Upload acceptance jar
       with:
         name: acceptance-artifacts
-        path: Asset_Tracker-acceptance/target/Asset_Tracker-acceptance*.jar
+        path: Asset_Tracker-acceptance/target/Asset_Tracker-acceptance-0.0.0.jar
     - name: Run docker build
       run: docker build -t mcawte/asset-tracker:latest .
     - name: Log in to Docker Hub
