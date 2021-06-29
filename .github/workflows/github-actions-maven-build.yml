@@ -25,6 +25,8 @@ jobs:
       run: mvn package
     - name: List file structure
       run: ls -ahl Asset_Tracker-acceptance/target
+    - name: List pwd
+      run: pwd
     - uses: actions/upload-artifact@v1.0.0
       name: Upload acceptance jar
       with:
