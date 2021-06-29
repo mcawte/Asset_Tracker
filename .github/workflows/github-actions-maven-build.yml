@@ -53,8 +53,6 @@ jobs:
       with:
         java-version: '11'
         distribution: 'adopt'
-    - name: Does console out
-      run: ls -ahl /github/workspace
     - name: Download artifact from workspace  
       uses: actions/download-artifact@v2
       with:
