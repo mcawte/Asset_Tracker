@@ -6,4 +6,5 @@
     <suppress checks="Indentation" files="." />
     <suppress checks="MissingJavadocMethod" files="." />
     <suppress checks="MethodName" files=".*Steps.java" />
+    <suppress checks="MethodName" files="[\\/]Asset_Tracker-acceptance[\\/]" />
 </suppressions>
