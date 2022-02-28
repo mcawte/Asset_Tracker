@@ -6,7 +6,7 @@
 
     <groupId>com.acme</groupId>
     <artifactId>Asset_Tracker_Project</artifactId>
-    <version>0.0.0</version>
+    <version>0.1.0</version>
     <packaging>pom</packaging>
 
     <properties>
